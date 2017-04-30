@@ -24,20 +24,6 @@ int main() {
     uf_tree.unite(1, 2);
     std::cout << uf_tree << std::endl; // [1, 2, 3, 4, 5, 6]
 }
-
-using namespace keika;
-
-Result<double> divide(double a, double b) {
-    if (b == 0.0)
-        return Result<double>::error("division by zero!!");
-    else
-        return a / b;
-}
-
-int main() {
-    std::cout << divide(1.0, 1.0) << std::endl; // "Result::ok(1)"
-    std::cout << divide(1.0, 0.0) << std::endl; // "Result::error(division by zero!!)"
-}
 ```
 
 # Copyright
