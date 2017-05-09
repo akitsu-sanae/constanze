@@ -5,8 +5,8 @@
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ============================================================================*/
 
-#ifndef CONSTANZE_HPP
-#define CONSTANZE_HPP
+#ifndef CONSTANZE_UNION_FIND_HPP
+#define CONSTANZE_UNION_FIND_HPP
 
 #include <cstddef>
 #include <memory>

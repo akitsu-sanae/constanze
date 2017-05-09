@@ -26,6 +26,28 @@ int main() {
 }
 ```
 
+SegmentTree
+```cpp
+#include <constanze/segment-tree.hpp>
+#include <iostream>
+
+int main() {
+    std::array<int, 8> data {
+        2, 6, 3, 0, 4, 5, 12, 52
+    };
+    auto tree = constanze::make_segment_tree(
+            data,
+            [](int const& lhs, int const& rhs) {
+                if (lhs < rhs)
+                    return lhs;
+                else
+                    return rhs;
+            });
+    std::cout << tree.min_in_range(5, 7) << std::endl; // 5
+}
+
+```
+
 # Copyright
 Copyright (C) 2017 akitsu sanae.  
 Distributed under the Boost Software License, Version 1.0. 
