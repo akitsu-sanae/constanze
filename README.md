@@ -48,6 +48,26 @@ int main() {
 
 ```
 
+AVL tree
+```cpp
+#include "constanze/avl-tree.hpp"
+#include <iostream>
+
+int main() {
+    using tree_t = constanze::avl_tree<int>;
+    auto tree = tree_t{3};
+    while (true) {
+        std::cout << tree;
+        std::string input;
+        std::cout << "next value: " << std::flush;
+        std::cin >> input;
+        if (input == "quit" || input == "q")
+            break;
+        tree.insert(std::stoi(input));
+    }
+}
+```
+
 # Copyright
 Copyright (C) 2017 akitsu sanae.  
 Distributed under the Boost Software License, Version 1.0. 
