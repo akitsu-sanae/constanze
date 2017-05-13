@@ -58,12 +58,22 @@ int main() {
     auto tree = tree_t{3};
     while (true) {
         std::cout << tree;
-        std::string input;
+
         std::cout << "next value: " << std::flush;
+        std::string input;
         std::cin >> input;
         if (input == "quit" || input == "q")
             break;
-        tree.insert(std::stoi(input));
+
+        std::string num;
+        std::cin >> num;
+
+        if (input == "add" || input == "insert")
+            tree.insert(std::stoi(num));
+        else if (input == "delete" || input == "erase")
+            tree.erase(std::stoi(num));
+        else
+            std::cout << "unknown operation: " << input << std::endl;
     }
 }
 ```

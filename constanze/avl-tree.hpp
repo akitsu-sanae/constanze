@@ -87,21 +87,29 @@ struct avl_tree {
             throw std::logic_error{"already exist"};
         }
         set_height();
-        auto l = left? left->height : 0;
-        auto r = right? right->height: 0;
-        if (r - l >= 2) {
-            auto l = right->left? right->left->height: 0;
-            auto r = right->right? right->right->height: 0;
-            if (l > r)
-                right->rotate_right();
-            rotate_left();
-        } else if (r - l <= -2) {
-            auto l = left->left? left->left->height: 0;
-            auto r = left->right? left->right->height: 0;
-            if (r > l)
-                left->rotate_left();
-            rotate_right();
+        normalize();
+    }
+
+    void erase(T const& v) {
+        if (v < value) {
+            if (!left)
+                throw std::logic_error{"not found such value"};
+            if (left->value == v)
+                erase_left_impl();
+            else
+                left->erase(v);
+        } else if(v > value) {
+            if (!right)
+                throw std::logic_error{"not found such value"};
+            if (right->value == v)
+                erase_right_impl();
+            else
+                right->erase(v);
+        } else {
+            throw std::logic_error{"can not be happen"};
         }
+        set_height();
+        normalize();
     }
 
 private:
@@ -133,6 +141,43 @@ private:
             right->set_height();
     }
 
+    void erase_left_impl() {
+        if (left->left && left->right) {
+            auto min = left->min_element();
+            left->value = min->value;
+        } else if (left->left) {
+            left = std::move(left->left);
+        } else if (left->right) {
+            left = std::move(left->right);
+        } else {
+            left = nullptr;
+        }
+    }
+
+    void erase_right_impl() {
+        if (right->left && right->right) {
+            auto min = right->min_element();
+            right->value = min->value;
+            min = nullptr;
+        } else if (right->left) {
+            right = std::move(right->left);
+        } else if (right->right) {
+            right = std::move(right->right);
+        } else {
+            right = nullptr;
+        }
+    }
+
+    child_type min_element() {
+        if (left && left->left) {
+            return left->min_element();
+        } else if (left) {
+            return std::move(left);
+        } else {
+            throw std::logic_error{"invalid operation"};
+        }
+    }
+
     void set_height() {
         if (left) left->set_height();
         if (right) right->set_height();
@@ -145,6 +190,24 @@ private:
             height = right->height + 1;
         else
             height = 1;
+    }
+
+    void normalize() {
+        auto l = left? left->height : 0;
+        auto r = right? right->height: 0;
+        if (r - l >= 2) {
+            auto l = right->left? right->left->height: 0;
+            auto r = right->right? right->right->height: 0;
+            if (l > r)
+                right->rotate_right();
+            rotate_left();
+        } else if (r - l <= -2) {
+            auto l = left->left? left->left->height: 0;
+            auto r = left->right? left->right->height: 0;
+            if (r > l)
+                left->rotate_left();
+            rotate_right();
+        }
     }
 
     int height = 1;
