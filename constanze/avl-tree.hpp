@@ -148,8 +148,8 @@ private:
     }
 
     int height = 1;
-    child_type left, right;
     element_type value;
+    child_type left, right;
 };
 
 namespace detail {
@@ -171,6 +171,7 @@ inline static void print_avl(
 template<typename T>
 inline static std::ostream& operator<<(std::ostream& os, avl_tree<T> const& tree) {
     detail::print_avl(os, tree, "");
+    return os;
 }
 
 }
